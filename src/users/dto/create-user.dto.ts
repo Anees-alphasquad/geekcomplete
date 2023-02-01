@@ -6,7 +6,6 @@ export class CreateUserDto {
     @IsString()
     email: string
 
-    @IsEmail()
     @IsString()
     password: string
 
@@ -20,9 +19,11 @@ export class CreateUserDto {
 
     @IsNumber()
     @Type(()=> Number)
+    @IsOptional()
     productId: number
 
     @IsNumber()
     @Type(()=> Number)
+    @IsOptional()
     interactionId: number
 }

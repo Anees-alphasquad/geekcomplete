@@ -12,14 +12,14 @@ datasource db {
 
 model users {
   id               Int            @unique @default(autoincrement())
-  email            String
+  email            String         @unique
   password         String
   userName         String?
   displayPicture   String?
-  productId        Int?
   interaction      interactions[]
   interactionId    Int?
-  productPurchased products?      @relation(fields: [productId], references: [id])
+  products         products? @relation(fields: [productId], references: [id])
+  productId        Int?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @default(now())
   transactions     transactions[]
@@ -40,8 +40,7 @@ model products {
   price                String?
   numberOfInteractions Int?
   stripeId             String?
-  userId               Int?
-  users                users[]
+  users               users[]
   createdAt            DateTime       @default(now())
   updatedAt            DateTime       @default(now())
   transactions         transactions[]
@@ -73,6 +72,7 @@ model interactionMetas {
 
 model chats {
   id            Int           @unique @default(autoincrement())
+  message       String?
   interactionId Int?
   interactions  interactions? @relation(fields: [interactionId], references: [id])
   createdAt     DateTime      @default(now())

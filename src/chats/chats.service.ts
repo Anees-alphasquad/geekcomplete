@@ -15,13 +15,30 @@ export class ChatsService {
   }
 
   findAll() {
-    return this.prisma.chats.findMany();
+    return this.prisma.chats.findMany({
+      include: {
+        interactions: {
+          select: {
+            title: true,
+            userId: true
+          }
+        },
+      }
+    });
   }
 
   findOne(id: number) {
     return this.prisma.chats.findUnique({
       where: {
         id
+      },
+      include: {
+        interactions: {
+          select: {
+            title: true,
+            userId: true
+          }
+        },
       }
     });
   }

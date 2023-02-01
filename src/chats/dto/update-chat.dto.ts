@@ -6,5 +6,5 @@ import { IsNumber } from "class-validator"
 export class UpdateChatDto extends PartialType(CreateChatDto) {
     @IsNumber()
     @Type(() => Number)
-    interactionId: Number
+    interactionId: number
 }

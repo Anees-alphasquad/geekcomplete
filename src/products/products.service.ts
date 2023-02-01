@@ -5,40 +5,40 @@ import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
-  constructor (private prisma:PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
   create(createProductDto: CreateProductDto) {
     return this.prisma.products.create({
-      data: createProductDto
-    })
+      data: createProductDto,
+    });
   }
 
   findAll() {
-    return this.prisma.products.findMany()
+    return this.prisma.products.findMany();
   }
 
   findOne(id: number) {
     return this.prisma.products.findUnique({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
 
   update(id: number, updateProductDto: UpdateProductDto) {
     return this.prisma.products.update({
       where: {
-        id
+        id,
       },
-      data: updateProductDto
-    })
+      data: updateProductDto,
+    });
   }
 
   remove(id: number) {
     return this.prisma.products.delete({
       where: {
-        id
-      }
-    })
+        id,
+      },
+    });
   }
 }

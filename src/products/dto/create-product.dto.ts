@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -17,4 +17,9 @@ export class CreateProductDto {
 
   @IsString()
   stripeId: string;
+
+  @IsNumber()
+  @Type(()=> Number)
+  @IsOptional()
+  userId: number
 }

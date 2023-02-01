@@ -1,3 +1,4 @@
+import { Type } from "class-transformer"
 import { IsNumber, IsString } from "class-validator"
 
 export class CreateInteractionDto {
@@ -6,4 +7,6 @@ export class CreateInteractionDto {
 
     @IsString()
     type: string
+    @Type(()=> Number)
+    userId: number
 }

@@ -13,13 +13,22 @@ export class InteractionsService {
   }
 
   findAll() {
-    return this.prisma.interactions.findMany();
+    return this.prisma.interactions.findMany({
+      include: {
+        chats: true,
+        user: true,
+      }
+    });
   }
 
   findOne(id: number) {
     return this.prisma.interactions.findUnique({
       where: {
         id
+      },
+      include: {
+        chats: true,
+        user: true,
       }
     });
   }
