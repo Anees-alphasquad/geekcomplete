@@ -82,6 +82,11 @@ model chats {
 model transactions {
   id        Int      @unique @default(autoincrement())
   userId    Int
+  amount    Int?
+  method    String?
+  status    Boolean? @default(false)
+  stripeSourceId String?
+  card  Json?
   users     users?   @relation(fields: [userId], references: [id])
   productId Int
   products  products @relation(fields: [productId], references: [id])

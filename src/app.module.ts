@@ -9,9 +9,10 @@ import { InteractionsMetaModule } from './interactions-meta/interactions-meta.mo
 import { ChatsModule } from './chats/chats.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { AuthModule } from './auth/auth.module';
+import { PaymentsModule } from './payments/payments.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule, InteractionsModule, TransactionsModule, ChatsModule, InteractionsMetaModule, UsersMetaModule, AuthModule],
+  imports: [UsersModule, ProductsModule, InteractionsModule, TransactionsModule, ChatsModule, InteractionsMetaModule, UsersMetaModule, AuthModule, PaymentsModule],
   controllers: [AppController],
   providers: [AppService],
 })

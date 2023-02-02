@@ -161,6 +161,10 @@ async function main() {
     create: {
       productId: 1,
       userId: 1,
+      method: "card",
+      status: false,
+      stripeSourceId: "12345",
+      card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
     },
   });
 
@@ -170,6 +174,10 @@ async function main() {
     create: {
       productId: 2,
       userId: 2,
+      method: "card",
+      status: false,
+      stripeSourceId: "12345",
+      card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
     },
   });
 
@@ -179,6 +187,10 @@ async function main() {
     create: {
       productId: 3,
       userId: 3,
+      method: "card",
+      status: false,
+      stripeSourceId: "12345",
+      card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
     },
   });
 
