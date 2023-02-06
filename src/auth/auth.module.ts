@@ -9,6 +9,7 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 import { GoogleStrategy } from './google.strategy';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   controllers: [AuthController],
@@ -16,7 +17,7 @@ import { GoogleStrategy } from './google.strategy';
     provide: 'AUTH_SERVICE',
     useClass: AuthService
   }],
-  imports: [PrismaModule, UsersModule, JwtModule.register({
+  imports: [PrismaModule, ConfigModule, UsersModule, JwtModule.register({
     secret: jwtConstants.secret, signOptions: {expiresIn: '6000s'},
 }),]
 })

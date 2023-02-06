@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNumber, IsObject, IsOptional, IsString } from 'class-validator';
+import { IsNumber, IsJSON, IsOptional, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()
@@ -22,4 +22,7 @@ export class CreateProductDto {
   @Type(()=> Number)
   @IsOptional()
   userId: number
+
+  @IsOptional()
+  productObject: string
 }

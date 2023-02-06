@@ -11,13 +11,17 @@ export class TransactionsService {
 
   async create(createTransactionDto: CreateTransactionDto) {
     
+    // Create transaction
     const transaction = await this.prisma.transactions.create({
       data: createTransactionDto
     })
 
+    // Find user in the database and update productId and numberOfInteractions in that product
+    // TODO: create user if doesn't exist and update the utilization number as per the product that has been purchased
+
     const findUser = await this.users.findOne(createTransactionDto.userId)
     const findProductInteractions = await this.products.findOne(createTransactionDto.productId)
-
+  
     const updateUser = await this.prisma.users.update({
       where: {
         id: createTransactionDto.userId
@@ -28,7 +32,8 @@ export class TransactionsService {
         userName: findUser.userName,
         displayPicture: findUser.displayPicture,
         productId: createTransactionDto.productId,
-        numberOfInteractionsUtilised: findProductInteractions.numberOfInteractions
+        numberOfInteractionsUtilised: findProductInteractions.numberOfInteractions,
+        productObject: findProductInteractions.createdAt
       }
     })
     updateUser;

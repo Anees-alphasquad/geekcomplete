@@ -22,6 +22,7 @@ model users {
   googleAccessToken String?
   products         products? @relation(fields: [productId], references: [id]) 
   productId Int?
+  productObject   DateTime?
   numberOfInteractionsUtilised Int?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @default(now())

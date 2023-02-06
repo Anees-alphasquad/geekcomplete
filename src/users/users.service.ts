@@ -56,6 +56,7 @@ export class UsersService {
     })
   }
 
+  // TODO: Add cascade ondelete
   remove(id: number) {
     return this.prisma.users.delete({
       where: {
@@ -63,6 +64,8 @@ export class UsersService {
       }
     });
   }
+
+  // Find user by email and password for local signup
   async findUser (email: string, password: string) {
     const findUser = await this.prisma.users.findUnique({
       where: {
@@ -72,6 +75,7 @@ export class UsersService {
     return findUser
   }
 
+  // FInd user by email only
   async findUserByEmail (email: string) {
     return this.prisma.users.findUnique({
       where: {

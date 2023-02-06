@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from 'src/users/dto/update-user.dto';
-import { UsersService } from 'src/users/users.service';
 import Stripe from 'stripe';
 
 
@@ -8,7 +7,7 @@ import Stripe from 'stripe';
 export class StripeService {
     private stripe;
      
- constructor(private users: UsersService) {
+ constructor() {
     this.stripe = new Stripe('sk_test_51IC1P6F3OApwwatv1e7EwxoSWgEeiX1GQvNfyF6ffOOUybMZc04vd4hVMb4InZ4PpDgVrnL9hGF29X2C7akNruYp00tNUSrhc5', {
 
         apiVersion: '2022-11-15'
@@ -31,6 +30,7 @@ async createCheckOutSession(stripePriceId: string, productName: string, userId: 
         currency: 'usd',
         automatic_payment_methods: {enabled: true}
     })
+    paymentIntent; 
     console.log(UpdateUserDto)
 
     return {
