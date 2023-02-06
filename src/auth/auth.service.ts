@@ -63,12 +63,16 @@ export class AuthService {
           password: "test123" // update it with uuid
         }
       })
-      return newUser
+      const accessToken = this.jwt.sign(newUser)
+      return {
+        newUser, accessToken
+      }
     }
 
     else {
       const access_token = this.jwt.sign(user)
       console.log(access_token)
+      return access_token
     }
 }
 }
