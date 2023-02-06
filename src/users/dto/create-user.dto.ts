@@ -30,4 +30,7 @@ export class CreateUserDto {
     @IsOptional()
     @Type(()=> String)
     stripeCustomerId: string
+
+    @IsOptional()
+    googleAccessToken: string
 }

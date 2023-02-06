@@ -1,6 +1,6 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard } from './local-auth.guard';
+import { GoogleAuthGuard } from './gaurds';
 
 @Controller('auth')
 export class AuthController {
@@ -8,7 +8,19 @@ export class AuthController {
 
   // @UseGuards(LocalAuthGuard)
   @Post('login') 
-  async login(@Body('email')email: string, @Body('password')password: string){
+  async login(@Body('email') email: string, @Body('password')password: string){
     return this.authService.login(email, password)
+  }
+
+  @UseGuards(GoogleAuthGuard)
+  @Get('google-auth')
+  async handleLogin() {
+    return { msg: 'Google Authentication' }
+  }
+   
+  @UseGuards(GoogleAuthGuard)
+  @Get('google/redirect') 
+  async handleRedirect() {
+    return { msg: 'OK' }
   }
 }

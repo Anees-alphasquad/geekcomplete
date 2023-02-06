@@ -8,10 +8,14 @@ import { jwtConstants } from './constants';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
+import { GoogleStrategy } from './google.strategy';
 
 @Module({
   controllers: [AuthController],
-  providers: [AuthService, JwtAuthGuard, LocalStrategy, JwtStrategy],
+  providers: [AuthService, JwtAuthGuard, LocalStrategy, JwtStrategy, GoogleStrategy,{
+    provide: 'AUTH_SERVICE',
+    useClass: AuthService
+  }],
   imports: [PrismaModule, UsersModule, JwtModule.register({
     secret: jwtConstants.secret, signOptions: {expiresIn: '6000s'},
 }),]

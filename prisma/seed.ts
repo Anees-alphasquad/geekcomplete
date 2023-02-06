@@ -11,9 +11,9 @@ async function main() {
         where: { id: 0 },
         update: {},
         create: {
-          email: 'maheen@alphasquad.tech',
+          email: 'sherry@alphasquad.tech',
           password: passwordHash,
-          userName: 'maheenmalik',
+          userName: 'sherry',
           displayPicture: 'some_link_here'
         },
       });

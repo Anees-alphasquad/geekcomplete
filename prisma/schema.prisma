@@ -19,6 +19,7 @@ model users {
   interaction      interactions[]
   interactionId    Int?
   stripeCustomerId  String?
+  googleAccessToken String?
   products         products? @relation(fields: [productId], references: [id]) 
   productId Int?
   numberOfInteractionsUtilised Int?

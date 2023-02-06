@@ -72,7 +72,7 @@ export class UsersService {
     return findUser
   }
 
-  async stripeCustomer (email: string) {
+  async findUserByEmail (email: string) {
     return this.prisma.users.findUnique({
       where: {
         email
