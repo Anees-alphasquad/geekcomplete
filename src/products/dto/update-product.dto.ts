@@ -11,7 +11,7 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
     description: string;
   
     @IsString()
-    price: string;
+    stripePriceId: string;
   
     @IsNumber()
     @Type(() => Number)

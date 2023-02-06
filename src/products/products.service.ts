@@ -14,7 +14,11 @@ export class ProductsService {
   }
 
   findAll() {
-    return this.prisma.products.findMany();
+    return this.prisma.products.findMany({
+      include: {
+        users: true
+      }
+    });
   }
 
   findOne(id: number) {
@@ -22,6 +26,9 @@ export class ProductsService {
       where: {
         id,
       },
+      include: {
+        users: true
+      }
     });
   }
 

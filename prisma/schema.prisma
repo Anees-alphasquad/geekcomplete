@@ -18,8 +18,10 @@ model users {
   displayPicture   String?
   interaction      interactions[]
   interactionId    Int?
-  products         products? @relation(fields: [productId], references: [id])
-  productId        Int?
+  stripeCustomerId  String?
+  products         products? @relation(fields: [productId], references: [id]) 
+  productId Int?
+  numberOfInteractionsUtilised Int?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @default(now())
   transactions     transactions[]
@@ -37,10 +39,11 @@ model products {
   id                   Int            @unique @default(autoincrement())
   title                String?
   description          String?
-  price                String?
+  stripePriceId       String?
   numberOfInteractions Int?
   stripeId             String?
   users               users[]
+  ineractions         interactions[]
   createdAt            DateTime       @default(now())
   updatedAt            DateTime       @default(now())
   transactions         transactions[]
@@ -56,6 +59,8 @@ model interactions {
   metaId    Int?
   chats     chats[]
   chatIds   Int?
+  product   products? @relation(fields: [productId], references: [id])
+  productId Int?
   createdAt DateTime           @default(now())
   updatedAt DateTime           @default(now())
 }

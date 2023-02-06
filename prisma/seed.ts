@@ -1,14 +1,18 @@
 import { PrismaClient } from '@prisma/client';
+import { hashSync } from 'bcrypt';
 
 const prisma = new PrismaClient();
 async function main() {
+
+
+  const passwordHash = hashSync("test123",8)
 
     const user1 = await prisma.users.upsert({
         where: { id: 0 },
         update: {},
         create: {
           email: 'maheen@alphasquad.tech',
-          password: 'test123',
+          password: passwordHash,
           userName: 'maheenmalik',
           displayPicture: 'some_link_here'
         },
@@ -19,7 +23,7 @@ async function main() {
         update: {},
         create: {
           email: 'arslan@alphasquad.tech',
-          password: 'test123',
+          password: passwordHash,
           userName: 'arslan',
           displayPicture: 'some_link_here',
         },
@@ -30,7 +34,7 @@ async function main() {
         update: {},
         create: {
           email: 'haris@alphasquad.tech',
-          password: 'test123',
+          password: passwordHash,
           userName: 'arslan',
           displayPicture: 'some_link_here',
         },
@@ -99,9 +103,9 @@ async function main() {
     where: { id: 0 },
     update: {},
     create: {
-      title: 'Basic',
-      description: 'Basic plan to get you started',
-      price: '0',
+      title: 'Test_product',
+      description: 'delete_me_later',
+      stripePriceId: 'price_1MXMChF3OApwwatvh5242A2w',
       numberOfInteractions: 10,
       stripeId: '1278499',
     },
@@ -113,7 +117,7 @@ async function main() {
     create: {
       title: 'Starter',
       description: 'Basic plan to get you started',
-      price: '9',
+      stripePriceId: "9",
       numberOfInteractions: 100,
       stripeId: '1278499',
     },
@@ -125,7 +129,7 @@ async function main() {
     create: {
       title: 'Core',
       description: 'Basic plan to get you started',
-      price: '29',
+      stripePriceId: '29',
       numberOfInteractions: 500,
       stripeId: '1278499',
     },
@@ -137,7 +141,7 @@ async function main() {
     create: {
       title: 'Advanced',
       description: 'Basic plan to get you started',
-      price: '49',
+      stripePriceId: "49",
       numberOfInteractions: 1000,
       stripeId: '1278499',
     },
@@ -149,7 +153,7 @@ async function main() {
     create: {
       title: 'Pro',
       description: 'Basic plan to get you started',
-      price: '249',
+      stripePriceId: '249',
       numberOfInteractions: 5000,
       stripeId: '1278499',
     },

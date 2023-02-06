@@ -7,6 +7,8 @@ export class CreateInteractionDto {
 
     @IsString()
     type: string
+
     @Type(()=> Number)
     userId: number
+    
 }

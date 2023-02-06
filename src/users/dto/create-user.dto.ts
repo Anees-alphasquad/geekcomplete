@@ -26,4 +26,8 @@ export class CreateUserDto {
     @Type(()=> Number)
     @IsOptional()
     interactionId: number
+
+    @IsOptional()
+    @Type(()=> String)
+    stripeCustomerId: string
 }

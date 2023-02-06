@@ -9,7 +9,7 @@ export class CreateProductDto {
   description: string;
 
   @IsString()
-  price: string;
+  stripePriceId: string;
 
   @IsNumber()
   @Type(() => Number)

@@ -9,11 +9,12 @@ import { InteractionsMetaModule } from './interactions-meta/interactions-meta.mo
 import { ChatsModule } from './chats/chats.module';
 import { TransactionsModule } from './transactions/transactions.module';
 import { AuthModule } from './auth/auth.module';
-import { PaymentsModule } from './payments/payments.module';
+import { StripeController } from './stripe/stripe.controller';
+import { StripeModule } from './stripe/stripe.module';
 
 @Module({
-  imports: [UsersModule, ProductsModule, InteractionsModule, TransactionsModule, ChatsModule, InteractionsMetaModule, UsersMetaModule, AuthModule, PaymentsModule],
-  controllers: [AppController],
+  imports: [UsersModule, ProductsModule, InteractionsModule, TransactionsModule, ChatsModule, InteractionsMetaModule, UsersMetaModule, AuthModule, StripeModule],
+  controllers: [AppController, StripeController],
   providers: [AppService],
 })
 export class AppModule {}

@@ -9,7 +9,7 @@ export class UsersService {
   constructor(private prisma:PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
-    let { email, password, userName, displayPicture } = createUserDto
+    let { email, password, userName, displayPicture, stripeCustomerId } = createUserDto
     const hashPassword = hashSync(password, 8)
 
     const user = await this.prisma.users.create({
@@ -17,7 +17,8 @@ export class UsersService {
         email,
         password: hashPassword,
         userName,
-        displayPicture
+        displayPicture,
+        stripeCustomerId
       }
     })
     return user
@@ -27,7 +28,8 @@ export class UsersService {
     return this.prisma.users.findMany({
       include: {
         interaction: true,
-        transactions: true
+        transactions: true,
+        products: true
       }
     })
   }
@@ -39,7 +41,8 @@ export class UsersService {
       },
       include: {
         interaction: true,
-        transactions: true
+        transactions: true,
+        products: true
       }
     })
   }
@@ -67,5 +70,13 @@ export class UsersService {
       }
     })
     return findUser
+  }
+
+  async stripeCustomer (email: string) {
+    return this.prisma.users.findUnique({
+      where: {
+        email
+      }
+    })
   }
 }
