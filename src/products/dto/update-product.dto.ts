@@ -18,7 +18,7 @@ export class UpdateProductDto extends PartialType(CreateProductDto) {
     numberOfInteractions: number;
   
     @IsString()
-    stripeId: string;
+    StripeSessionId: string;
 
     @IsJSON()
     @IsOptional()

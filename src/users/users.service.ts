@@ -3,10 +3,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { hashSync } from 'bcrypt';
+import { isNotEmpty } from 'class-validator';
+import { subscribeOn } from 'rxjs';
+import { StripeService } from 'src/stripe/stripe.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma:PrismaService) {}
+  constructor(private prisma:PrismaService, stripe: StripeService) {}
 
   async create(createUserDto: CreateUserDto) {
     let { email, password, userName, displayPicture, stripeCustomerId } = createUserDto
@@ -25,14 +28,15 @@ export class UsersService {
   }
 
   findAll() {
-    return this.prisma.users.findMany({
-      include: {
-        interaction: true,
-        transactions: true,
-        products: true
-      }
-    })
-  }
+      const users = this.prisma.users.findMany({
+        include: {
+          interaction: true,
+          transactions: true,
+          products: true
+        }
+      })
+      return users
+    }
 
   findOne(id: number) {
     return this.prisma.users.findUnique({
@@ -56,7 +60,7 @@ export class UsersService {
     })
   }
 
-  // TODO: Add cascade ondelete
+  // TODO: Add cascade on delete
   remove(id: number) {
     return this.prisma.users.delete({
       where: {
@@ -83,4 +87,13 @@ export class UsersService {
       }
     })
   }
+
+  async findUserbyStripeId (stripeCustomerId: string) {
+    const user = await this.prisma.users.findUnique({
+      where: {
+        stripeCustomerId
+      }
+    })
+    return user
+}
 }

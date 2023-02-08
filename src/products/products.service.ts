@@ -27,7 +27,16 @@ export class ProductsService {
         id,
       },
       include: {
-        users: true
+        users: true,
+        transactions: true
+      }
+    });
+  }
+
+  async getProductsOnly (id: number) {
+    return this.prisma.products.findUnique({
+      where: {
+        id
       }
     });
   }

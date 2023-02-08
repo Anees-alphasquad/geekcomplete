@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService, private config:ConfigService) {
+  constructor(private authService: AuthService, private config: ConfigService) {
     super({
       clientID: config.get("GOOGLE_CLIENT_ID"),
       clientSecret: config.get("GOOGLE_SECRET"),

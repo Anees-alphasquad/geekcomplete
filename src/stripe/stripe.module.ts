@@ -3,12 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import { ProductsModule } from 'src/products/products.module';
 import { StripeService } from './stripe.service';
 import { StripeController } from './stripe.controller';
-import { UsersModule } from 'src/users/users.module';
+import { ScheduleModule } from 'nest-schedule';
+import { PrismaModule } from 'src/prisma/prisma.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   controllers: [StripeController],
   providers: [StripeService],
-  imports: [ProductsModule, ConfigModule, UsersModule],
+  imports: [ConfigModule, ScheduleModule, PrismaModule, ProductsModule, EventEmitterModule.forRoot()],
   exports: [StripeService]
 })
 export class StripeModule {}

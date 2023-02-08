@@ -18,12 +18,13 @@ model users {
   displayPicture   String?
   interaction      interactions[]
   interactionId    Int?
-  stripeCustomerId  String?
+  stripeCustomerId  String? @unique
   googleAccessToken String?
   products         products? @relation(fields: [productId], references: [id]) 
   productId Int?
   productObject   DateTime?
   numberOfInteractionsUtilised Int?
+  subscriptionExpiryDate    DateTime?
   createdAt        DateTime       @default(now())
   updatedAt        DateTime       @default(now())
   transactions     transactions[]
@@ -43,7 +44,7 @@ model products {
   description          String?
   stripePriceId       String?
   numberOfInteractions Int?
-  stripeId             String?
+  StripeSessionId             String?
   users               users[]
   ineractions         interactions[]
   createdAt            DateTime       @default(now())
@@ -92,7 +93,8 @@ model transactions {
   amount    Int?
   method    String?
   status    Boolean? @default(false)
-  stripeSourceId String?
+  checkoutSessionId String?
+  customerId    String?
   card  Json?
   users     users?   @relation(fields: [userId], references: [id])
   productId Int

@@ -36,4 +36,9 @@ export class UsersController {
   login(@Body('email') email: string,  @Body("password") password: string) {
     return 'user logged in successfully'
   }
+
+  // @Get('cronUsers')
+  // cronUsers() {
+  //   return this.usersService.cronUsers()
+  // }
 }

@@ -7,16 +7,6 @@ async function main() {
 
   const passwordHash = hashSync("test123",8)
 
-    const user1 = await prisma.users.upsert({
-        where: { id: 0 },
-        update: {},
-        create: {
-          email: 'sherry@alphasquad.tech',
-          password: passwordHash,
-          userName: 'sherry',
-          displayPicture: 'some_link_here'
-        },
-      });
     
       const user2 = await prisma.users.upsert({
         where: { id: 0 },
@@ -107,7 +97,7 @@ async function main() {
       description: 'delete_me_later',
       stripePriceId: 'price_1MXMChF3OApwwatvh5242A2w',
       numberOfInteractions: 10,
-      stripeId: '1278499',
+      StripeSessionId: '1278499',
     },
   });
 
@@ -119,7 +109,7 @@ async function main() {
       description: 'Basic plan to get you started',
       stripePriceId: "9",
       numberOfInteractions: 100,
-      stripeId: '1278499',
+      StripeSessionId: '1278499',
     },
   });
 
@@ -131,7 +121,7 @@ async function main() {
       description: 'Basic plan to get you started',
       stripePriceId: '29',
       numberOfInteractions: 500,
-      stripeId: '1278499',
+      StripeSessionId: '1278499',
     },
   });
 
@@ -143,7 +133,7 @@ async function main() {
       description: 'Basic plan to get you started',
       stripePriceId: "49",
       numberOfInteractions: 1000,
-      stripeId: '1278499',
+      StripeSessionId: '1278499',
     },
   });
 
@@ -155,20 +145,7 @@ async function main() {
       description: 'Basic plan to get you started',
       stripePriceId: '249',
       numberOfInteractions: 5000,
-      stripeId: '1278499',
-    },
-  });
-
-  const transaction1 = await prisma.transactions.upsert({
-    where: { id: 0 },
-    update: {},
-    create: {
-      productId: 1,
-      userId: 1,
-      method: "card",
-      status: false,
-      stripeSourceId: "12345",
-      card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
+      StripeSessionId: '1278499',
     },
   });
 
@@ -180,26 +157,25 @@ async function main() {
       userId: 2,
       method: "card",
       status: false,
-      stripeSourceId: "12345",
+      checkoutSessionId: "12345",
       card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
     },
   });
 
-  const transaction3 = await prisma.transactions.upsert({
-    where: { id: 0 },
-    update: {},
-    create: {
-      productId: 3,
-      userId: 3,
-      method: "card",
-      status: false,
-      stripeSourceId: "12345",
-      card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
-    },
-  });
+  // const transaction3 = await prisma.transactions.upsert({
+  //   where: { id: 0 },
+  //   update: {},
+  //   create: {
+  //     productId: 3,
+  //     userId: 3,
+  //     method: "card",
+  //     status: false,
+  //     checkoutSessionId: "12345",
+  //     card: {"name": "maheenMalik", "cardNumber":"4343343434343334"}
+  //   },
+  // });
 
   console.log({
-    user1,
     user2,
     user3,
     product1,
@@ -207,9 +183,8 @@ async function main() {
     product3,
     product4,
     product5,
-    transaction1,
     transaction2,
-    transaction3,
+    // transaction3,
     interaction1,
     interaction2,
     interaction3,

@@ -16,7 +16,7 @@ export class CreateProductDto {
   numberOfInteractions: number;
 
   @IsString()
-  stripeId: string;
+  StripeSessionId: string;
 
   @IsNumber()
   @Type(()=> Number)

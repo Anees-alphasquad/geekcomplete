@@ -33,4 +33,8 @@ export class CreateUserDto {
 
     @IsOptional()
     googleAccessToken: string
+
+    @IsOptional()
+    @Type(()=> Date)
+    subscriptionExpiryDate: Date
 }

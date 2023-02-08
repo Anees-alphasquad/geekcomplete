@@ -36,4 +36,8 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsOptional()
     googleAccessToken: string
+
+    @IsOptional()
+    @Type(()=> Date)
+    subscriptionExpiryDate: Date
 }
