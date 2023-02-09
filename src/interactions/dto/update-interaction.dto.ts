@@ -1,6 +1,6 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateInteractionDto } from './create-interaction.dto';
-import { IsNumber, IsString } from "class-validator"
+import { IsString } from "class-validator"
 
 
 export class UpdateInteractionDto extends PartialType(CreateInteractionDto) {

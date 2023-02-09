@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductsService } from 'src/products/products.service';
-import { StripeService } from 'src/stripe/stripe.service';
 import { UsersService } from 'src/users/users.service';
 import Stripe from 'stripe';
 
@@ -12,9 +12,9 @@ export class EventsService {
     private prisma: PrismaService,
     private products: ProductsService,
     private users: UsersService,
+    private config: ConfigService
   ) {
-    this.stripe = new Stripe(
-      'sk_test_51IC1P6F3OApwwatv1e7EwxoSWgEeiX1GQvNfyF6ffOOUybMZc04vd4hVMb4InZ4PpDgVrnL9hGF29X2C7akNruYp00tNUSrhc5',
+    this.stripe = new Stripe(config.get<string>('STRIPE_SECRET_KEY'),
       {
         apiVersion: '2022-11-15',
       },
@@ -22,7 +22,7 @@ export class EventsService {
   }
 
   async handleStripeStatus(data: any) {
-    // TODO: Need to change the conditions to `greaterThan` todays data in stripe Service
+    // TODO: Need to change the conditions to `greaterThan` todays data in stripe Service - its done
     try {
       // Retrieve product from data
       const product = await this.products.getProductsOnly(data.productId);
@@ -70,6 +70,7 @@ export class EventsService {
         });
         console.log('UPDATED USER: ', updateUser);
         return 'Please renew your subscription';
+
       } else {
         const updateUserSubscription = await this.prisma.users.update({
           where: {
@@ -84,6 +85,7 @@ export class EventsService {
             subscriptionExpiryDate: newExpiryDate,
           },
         });
+
         console.log(
           'UPDATE_USER_COMING_FROM_ELSE_CONDITION: ',
           updateUserSubscription,

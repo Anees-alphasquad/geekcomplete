@@ -3,13 +3,10 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { hashSync } from 'bcrypt';
-import { isNotEmpty } from 'class-validator';
-import { subscribeOn } from 'rxjs';
-import { StripeService } from 'src/stripe/stripe.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private prisma:PrismaService, stripe: StripeService) {}
+  constructor(private prisma:PrismaService) {}
 
   async create(createUserDto: CreateUserDto) {
     let { email, password, userName, displayPicture, stripeCustomerId } = createUserDto

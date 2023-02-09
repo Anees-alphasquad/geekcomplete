@@ -17,8 +17,8 @@ export class StripeController {
         return this.stripe.storeResponse(allParams)
     }
 
-    @Post('retrieve-checkout-session')
-    retrieveCheckOutSession (@Body('sessionId') sessionId: string) {
-        return this.stripe.retrieveCheckOutSession(sessionId)
-    }
+    // @Post('retrieve-checkout-session')
+    // retrieveCheckOutSession (@Body('sessionId') sessionId: string) {
+    //     return this.stripe.schecduleCheck(sessionId)
+    // }
 }

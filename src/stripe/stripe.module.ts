@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProductsModule } from 'src/products/products.module';
 import { StripeService } from './stripe.service';
 import { StripeController } from './stripe.controller';
@@ -10,7 +10,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   controllers: [StripeController],
   providers: [StripeService],
-  imports: [ConfigModule, ScheduleModule, PrismaModule, ProductsModule, EventEmitterModule.forRoot()],
+  imports: [ConfigModule.forRoot(), ScheduleModule, PrismaModule, ProductsModule, EventEmitterModule.forRoot()],
   exports: [StripeService]
 })
 export class StripeModule {}

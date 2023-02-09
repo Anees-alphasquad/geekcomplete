@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -11,10 +12,10 @@ export class StripeService {
 
   constructor(
     private prisma: PrismaService,
-    private eventEmitter: EventEmitter2
+    private eventEmitter: EventEmitter2,
+    private config: ConfigService
   ) {
-    this.stripe = new Stripe(
-      'sk_test_51IC1P6F3OApwwatv1e7EwxoSWgEeiX1GQvNfyF6ffOOUybMZc04vd4hVMb4InZ4PpDgVrnL9hGF29X2C7akNruYp00tNUSrhc5',
+    this.stripe = new Stripe(this.config.get('STRIPE_SECRET_KEY'),
       {
         apiVersion: '2022-11-15',
       },
@@ -55,8 +56,8 @@ export class StripeService {
       session,
     };
   }
-  //  @Cron(CronExpression.EVERY_10_SECONDS)
-  async retrieveCheckOutSession(sessionId: string) {
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  async schecduleCheck(sessionId: string) {
     // Retrieve all paying customers
     const payingUsers = await this.prisma.users.findMany({
       where: {
@@ -68,19 +69,18 @@ export class StripeService {
     // console.log(payingUsers);
 
     // Declare today's date
-    const today = new Date()
+    const today = new Date();
     // console.log('Total paying users: ', payingUsers)
+
     // Loop through the users and get the subscription expiration date
-    payingUsers.map( async (user) => {
-        // TODO: Change the condition below
-        if (today < user.subscriptionExpiryDate) {
-            // Emit event
-            this.eventEmitter.emit(
-                'check_stripe_status', user
-            )
-        }
-    })
-    return "OK"
+    payingUsers.map(async (user) => {
+      // TODO: Change the condition below
+      if (today > user.subscriptionExpiryDate) {
+        // Emit event
+        this.eventEmitter.emit('check_stripe_status', user);
+      }
+    });
+    return 'OK';
   }
 
   async storeResponse(allParams: any) {
@@ -89,6 +89,6 @@ export class StripeService {
   }
 
   async retrieveSession(sessionId: string) {
-    return this.stripe.checkout.sessions.retrieve(sessionId)
+    return this.stripe.checkout.sessions.retrieve(sessionId);
   }
 }

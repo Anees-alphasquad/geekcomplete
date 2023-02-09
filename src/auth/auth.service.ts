@@ -4,10 +4,7 @@ import { compareSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { stringify } from 'querystring';
-import { access } from 'fs';
 
 @Injectable()
 export class AuthService {

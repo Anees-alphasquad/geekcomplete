@@ -2,8 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { InteractionsService } from './interactions.service';
 import { CreateInteractionDto } from './dto/create-interaction.dto';
 import { UpdateInteractionDto } from './dto/update-interaction.dto';
-import { Product } from 'src/products/entities/product.entity';
-import { NumericOperator } from 'aws-sdk/clients/costexplorer';
 
 @Controller('interactions')
 export class InteractionsController {

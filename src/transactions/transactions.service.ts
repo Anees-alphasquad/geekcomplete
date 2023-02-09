@@ -1,9 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CronExpression } from '@nestjs/schedule';
-import { Cron } from 'nest-schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductsService } from 'src/products/products.service';
-import { StripeService } from 'src/stripe/stripe.service';
 import { UsersService } from 'src/users/users.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
@@ -14,7 +11,6 @@ export class TransactionsService {
     private prisma: PrismaService,
     private users: UsersService,
     private products: ProductsService,
-    private stripe: StripeService
   ) {}
 
   async create(createTransactionDto: CreateTransactionDto) {
@@ -60,11 +56,6 @@ export class TransactionsService {
       }
     });
     updateUser;
-    // compare the now date with the expiration date (crone job)
-
-    // If it is equal to it, check the payment status of subscription using the checkout.session_id of the user
-
-    // if not, let it go. 
     return transaction;
   }
 
