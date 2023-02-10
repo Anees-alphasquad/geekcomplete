@@ -35,7 +35,7 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
     stripeCustomerId: string
 
     @IsOptional()
-    googleAccessToken: string
+    socialAccessToken: string
 
     @IsOptional()
     @Type(()=> Date)

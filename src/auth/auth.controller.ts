@@ -1,6 +1,6 @@
 import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { GoogleAuthGuard } from './gaurds';
+import { GithubAuthGuard, GoogleAuthGuard, TwitterAuthGuard } from './gaurds';
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +21,36 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   @Get('google/redirect') 
   async handleRedirect() {
-    return { msg: 'OK' }
+    // const token = await this.authService.validateSocialUser();
+    // res.cookie('access_token: ', token, {
+    //   maxAge: 2592000000,
+    //   sameSite: true,
+    //   secure: false,
+    // }) 
+    return {msg: 'OK'}
+  }
+
+  @UseGuards(GithubAuthGuard)
+  @Get('github-auth')
+  async githubLogin() {
+    return {msg: "Github Authentication"}
+  }
+
+  @UseGuards(GithubAuthGuard)
+  @Get('github/redirect')
+  async githubRedirect() {
+    return {msg: 'OK'}
+  }
+
+  @UseGuards(TwitterAuthGuard)
+  @Get('twitter-auth')
+  async twitterLogin() {
+    return {mes: "Twitter authentication"}
+  }
+
+  @UseGuards(TwitterAuthGuard)
+  @Get('twitter/redirect')
+  async twitterRedirect() {
+    return {msg: 'OK'}
   }
 }

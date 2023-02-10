@@ -32,7 +32,7 @@ export class CreateUserDto {
     stripeCustomerId: string
 
     @IsOptional()
-    googleAccessToken: string
+    socialAccessToken: string
 
     @IsOptional()
     @Type(()=> Date)

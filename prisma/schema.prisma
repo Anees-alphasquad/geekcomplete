@@ -19,7 +19,7 @@ model users {
   interaction      interactions[]
   interactionId    Int?
   stripeCustomerId  String? @unique
-  googleAccessToken String?
+  socialAccessToken String? // leverage this for all the social logins
   products         products? @relation(fields: [productId], references: [id]) 
   productId Int?
   productObject   DateTime?

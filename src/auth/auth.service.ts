@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
-import { compareSync } from 'bcrypt';
+import { compareSync, hashSync } from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { HttpException } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common';
@@ -46,32 +46,45 @@ export class AuthService {
     return null;
   }
 
-  async validateGoogleUser(email: string, displayPicture: string, userName: string, googleAccessToken: string) {
-
-    const user = await this.usersService.findUserByEmail(email)
+  async validateSocialUser(
+    email: string,
+    displayPicture: string,
+    userName: string,
+    socialAccessToken: string,
+  ) {
+    const user = await this.usersService.findUserByEmail(email);
 
     if (!user) {
+      const hashPassword = hashSync('test123', 8)
       const newUser = await this.prisma.users.create({
         data: {
-          email, 
+          email,
           displayPicture,
           userName,
-          googleAccessToken,
-          password: "test123" // update it with uuid
-        }
-      })
-      const accessToken = this.jwt.sign(newUser)
+          socialAccessToken,
+          password: hashPassword, // update it with uuid
+        },
+      });
+      const accessToken = this.jwt.sign(newUser);
+      console.log("NEW USER: ", accessToken)
       return {
-        newUser, accessToken
-      }
+        newUser,
+        accessToken,
+      };
+    } else {
+      const access_token = this.jwt.sign(user);
+      console.log("EXISTING USER: ", access_token);
+      return access_token;
     }
+  }
 
-    else {
-      const access_token = this.jwt.sign(user)
-      console.log(access_token)
-      return access_token
-    }
-}
-
-
+  async findUser(email: string) {
+    const user = await this.prisma.users.findUnique({
+      where: {
+       email  
+      },
+    });
+    console.log("THIS IS COMING FROM FINDUSER DESRIALIZER: ", user)
+    return user;
+  }
 }

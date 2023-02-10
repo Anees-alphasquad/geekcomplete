@@ -7,29 +7,46 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class GoogleStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService, private config: ConfigService) {
+  constructor(private authService: AuthService) {
     super({
-      clientID: config.get("GOOGLE_CLIENT_ID"),
-      clientSecret: config.get("GOOGLE_SECRET"),
+      clientID:
+        '354389036511-9hkgau0uav0lus122evqetq9o8k9slh5.apps.googleusercontent.com',
+      clientSecret: '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',
       callbackURL: 'http://localhost:3000/auth/google/redirect',
       scope: ['email', 'profile'],
     });
   }
 
-  async validate(accessToken: string, refreshToken: string, profile: Profile, done: VerifyCallback): Promise<any> {
+  async validate(
+    accessToken: string,
+    refreshToken: string,
+    profile: Profile,
+    done: VerifyCallback,
+  ): Promise<any> {
+    try {
+      const { name, emails, photos } = profile;
+      const user = {
+        email: emails[0].value,
+        firstName: name.givenName,
+        lastName: name.familyName,
+        picture: photos[0].value,
+        refreshToken,
+        accessToken,
+      };
+      console.log(profile);
+      done(null, user);
 
-    const { name, emails, photos } = profile
-    const user = {
-      email: emails[0].value,
-      firstName: name.givenName,
-      lastName: name.familyName,
-      picture: photos[0].value,
-      refreshToken,
-      accessToken
+      const newUser = await this.authService.validateSocialUser(
+        user.email,
+        user.picture,
+        user.firstName,
+        user.accessToken,
+      );
+      // console.log(newUser)
+      return newUser;
+    } catch (error) {
+      console.log(error)
+      return error
     }
-
-    const newUser = await this.authService.validateGoogleUser(user.email, user.picture, user.firstName, user.accessToken)
-    // console.log(newUser)
-    return newUser
   }
 }

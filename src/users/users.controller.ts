@@ -17,10 +17,10 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.usersService.findOne(+id);
+  // }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -35,6 +35,11 @@ export class UsersController {
   @Post('/login')
   login(@Body('email') email: string,  @Body("password") password: string) {
     return 'user logged in successfully'
+  }
+
+  @Get('getByEmail')
+  async findUserByEmail(@Body('email')email: string) {
+    return this.usersService.findUserByEmail(email)
   }
 
   // @Get('cronUsers')
